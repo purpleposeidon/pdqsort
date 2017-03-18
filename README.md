@@ -45,7 +45,7 @@ Sorting 10 million random numbers of type `u64`:
 | pdqsort           | **370 ms** |
 | slice::sort       |     668 ms |
 | [quickersort][qs] |     777 ms |
-| [dmsort][ds]      |     728 ms |
+| ~~[dmsort][ds]~~  |     728 ms |
 | [rdxsort][rs]     |     602 ms |
 
 #### Extensive benchmarks
