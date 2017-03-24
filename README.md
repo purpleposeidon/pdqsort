@@ -11,7 +11,7 @@ sort (i.e. may reorder equal elements). However, in most cases stability doesn't
 
 The algorithm is based on pdqsort by Orson Peters, published at: https://github.com/orlp/pdqsort
 
-#### Now in in nightly Rust
+#### Now in nightly Rust
 
 If you're using nightly Rust, you don't need this crate. The sort is as of recently
 [implemented](https://github.com/rust-lang/rust/pull/40601) in libcore.
@@ -66,31 +66,5 @@ Sorting 10 million random numbers of type `u64`:
 | [quickersort][qs] |     777 ms |
 | [rdxsort][rs]     |     602 ms |
 
-#### Extensive benchmarks
-
-The following benchmarks are [used in Rust][bench] for testing the performance of slice::sort.
-
-| Benchmark               | pdqsort       | slice::sort   | [quickersort][qs] | [rdxsort][rs] |
-|-------------------------|--------------:|--------------:|------------------:|--------------:|
-| large_ascending         |         11 us |      **9 us** |             12 us |        358 us |
-| large_descending        |     **14 us** |     **14 us** |             46 us |        347 us |
-| large_random            |    **342 us** |        509 us |            534 us |        399 us |
-| large_random_expensive  |         63 ms |     **24 ms** |                -  |            -  |
-| large_mostly_ascending  |     **82 us** |        239 us |            129 us |        353 us |
-| large_mostly_descending |     **93 us** |        267 us |            135 us |        349 us |
-| large_big_ascending     |        375 us |    **370 us** |            374 us |     49,597 us |
-| large_big_descending    |    **441 us** |    **441 us** |            571 us |     49,675 us |
-| large_big_random        |  **1,573 us** |      2,141 us |          1,971 us |     43,578 us |
-| medium_ascending        |        186 ns |        145 ns |        **148 ns** |      4,509 ns |
-| medium_descending       |        214 ns |    **188 ns** |            490 ns |      4,947 ns |
-| medium_random           |  **2,926 ns** |      3,297 ns |          3,252 ns |      6,466 ns |
-| small_ascending         |         32 ns |         32 ns |         **25 ns** |      1,597 ns |
-| small_descending        |         55 ns |         55 ns |         **51 ns** |      1,595 ns |
-| small_random            |        347 ns |        346 ns |        **333 ns** |      3,841 ns |
-| small_big_ascending     |         92 ns |         92 ns |         **89 ns** |     35,749 ns |
-| small_big_descending    |    **246 ns** |    **246 ns** |            420 ns |     35,807 ns |
-| small_big_random        |    **492 ns** |    **492 ns** |            582 ns |     46,393 ns |
-
 [qs]: https://github.com/notriddle/quickersort
 [rs]: https://github.com/crepererum/rdxsort-rs
-[bench]: https://github.com/rust-lang/rust/blob/468227129d08b52c4cf90313b29fdad1b80e596b/src/libcollectionstest/slice.rs#L1406
