@@ -640,7 +640,7 @@ fn recurse<'a, T, F>(mut v: &'a mut [T], is_less: &mut F, mut pred: Option<&'a T
     where F: FnMut(&T, &T) -> bool
 {
     // Slices of up to this length get sorted using insertion sort.
-    const MAX_INSERTION: usize = 15;
+    const MAX_INSERTION: usize = 20;
 
     // True if the last partitioning was reasonably balanced.
     let mut was_balanced = true;
