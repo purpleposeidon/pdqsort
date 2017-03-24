@@ -1,6 +1,6 @@
 [package]
 name = "pdqsort"
-version = "1.0.1"
+version = "1.0.2"
 authors = ["Stjepan Glavina <stjepang@gmail.com>"]
 description = "Pattern-defeating quicksort"
 repository = "https://github.com/stjepang/pdqsort"
