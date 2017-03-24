@@ -87,7 +87,7 @@ fn shift_head<T, F>(v: &mut [T], is_less: &mut F)
     let len = v.len();
     unsafe {
         // If the first two elements are out-of-order...
-        if v.len() >= 2 && is_less(v.get_unchecked(1), v.get_unchecked(0)) {
+        if len >= 2 && is_less(v.get_unchecked(1), v.get_unchecked(0)) {
             // Read the first element into a stack-allocated variable. If a following comparison
             // operation panics, `hole` will get dropped and automatically write the element back
             // into the slice.
@@ -99,7 +99,7 @@ fn shift_head<T, F>(v: &mut [T], is_less: &mut F)
             ptr::copy_nonoverlapping(v.get_unchecked(1), v.get_unchecked_mut(0), 1);
 
             for i in 2..len {
-                if !is_less(&v[i], tmp.value.as_ref().unwrap()) {
+                if !is_less(v.get_unchecked(i), tmp.value.as_ref().unwrap()) {
                     break;
                 }
 
@@ -146,7 +146,7 @@ fn shift_tail<T, F>(v: &mut [T], is_less: &mut F)
 
 /// Partially sorts a slice by shifting several out-of-order elements around.
 ///
-/// Returns true if the slice is sorted at the end. This function is `O(n)` worst-case.
+/// Returns `true` if the slice is sorted at the end. This function is `O(n)` worst-case.
 #[cold]
 fn partial_insertion_sort<T, F>(v: &mut [T], is_less: &mut F) -> bool
     where F: FnMut(&T, &T) -> bool
@@ -154,7 +154,7 @@ fn partial_insertion_sort<T, F>(v: &mut [T], is_less: &mut F) -> bool
     // Maximum number of adjacent out-of-order pairs that will get shifted.
     const MAX_STEPS: usize = 5;
     // If the slice is shorter than this, don't shift any elements.
-    const SHORTEST_SHIFTING: usize = 80;
+    const SHORTEST_SHIFTING: usize = 50;
 
     let len = v.len();
     let mut i = 1;
@@ -565,7 +565,7 @@ fn break_patterns<T>(v: &mut [T]) {
     }
 }
 
-/// Chooses a pivot in `v` and returns the index and true if the slice is likely already sorted.
+/// Chooses a pivot in `v` and returns the index and `true` if the slice is likely already sorted.
 ///
 /// Elements in `v` might be reordered in the process.
 fn choose_pivot<T, F>(v: &mut [T], is_less: &mut F) -> (usize, bool)
@@ -573,7 +573,7 @@ fn choose_pivot<T, F>(v: &mut [T], is_less: &mut F) -> (usize, bool)
 {
     // Minimum length to choose the median-of-medians method.
     // Shorter slices use the simple median-of-three method.
-    const SHORTEST_MEDIAN_OF_MEDIANS: usize = 80;
+    const SHORTEST_MEDIAN_OF_MEDIANS: usize = 50;
     // Maximum number of swaps that can be performed in this function.
     const MAX_SWAPS: usize = 4 * 3;
 
@@ -640,7 +640,7 @@ fn recurse<'a, T, F>(mut v: &'a mut [T], is_less: &mut F, mut pred: Option<&'a T
     where F: FnMut(&T, &T) -> bool
 {
     // Slices of up to this length get sorted using insertion sort.
-    const MAX_INSERTION: usize = 20;
+    const MAX_INSERTION: usize = 15;
 
     // True if the last partitioning was reasonably balanced.
     let mut was_balanced = true;
